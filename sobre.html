@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Extremo — Padaria, Pastelaria, Pizzaria e Hamburgueria em Arnoso Santa Eulália, V.N. Famalicão. Confeccionamos amor e servimo-lo com carinho.">
+<title>Extremo — Padaria Pastelaria Pizzaria Hamburgueria</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brown: #2A1608;
+    --brown-mid: #5C3D1E;
+    --gold: #9A7A3A;
+    --gold-light: #C8A55A;
+    --gold-pale: #E8D5A8;
+    --cream: #FAFAF6;
+    --cream-dark: #F2EDE0;
+    --text: #1C0D04;
+    --text-muted: #7A5A3A;
+    --divider: #E0D5C0;
+    --white: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(42,22,8,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(200,165,90,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 60px;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 400;
+    color: #F0E0B8;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.8rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(200,165,90,0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: #F0E0B8; }
+
+  .nav-cta {
+    background: var(--gold-light);
+    color: var(--brown);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--gold-pale); }
+
+  /* Mobile nav */
+  .nav-mobile-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .nav-mobile-btn span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--gold-light);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    height: 100vh;
+    min-height: 600px;
+    background: var(--brown);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 30% 50%, rgba(200,165,90,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 30%, rgba(200,165,90,0.05) 0%, transparent 50%);
+  }
+
+  /* Decorative leaf pattern */
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cpath d='M100,10 Q150,50 140,100 Q130,150 100,190 Q70,150 60,100 Q50,50 100,10Z' fill='none' stroke='%23C8A55A' stroke-width='1'/%3E%3Cpath d='M10,100 Q50,50 100,60 Q150,70 190,100 Q150,130 100,140 Q50,150 10,100Z' fill='none' stroke='%23C8A55A' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    padding: 0 1.5rem;
+    animation: heroIn 1.2s ease both;
+  }
+
+  @keyframes heroIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .hero-eyebrow {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 1.2rem;
+    animation: heroIn 1.2s 0.2s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    font-weight: 300;
+    font-style: italic;
+    color: #F0E0B8;
+    line-height: 0.95;
+    margin-bottom: 1.2rem;
+    animation: heroIn 1.2s 0.3s ease both;
+  }
+
+  .hero-rule {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+    margin: 1.2rem auto;
+    animation: heroIn 1.2s 0.4s ease both;
+  }
+
+  .hero-tagline {
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(200,165,90,0.65);
+    margin-bottom: 2.5rem;
+    animation: heroIn 1.2s 0.5s ease both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: heroIn 1.2s 0.6s ease both;
+  }
+
+  .btn-gold {
+    background: var(--gold-light);
+    color: var(--brown);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-gold:hover { background: var(--gold-pale); transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    color: #F0E0B8;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.8rem;
+    border-radius: 4px;
+    border: 1px solid rgba(200,165,90,0.4);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover { border-color: var(--gold-light); color: var(--gold-light); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(5px); }
+  }
+
+  .hero-scroll span {
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(200,165,90,0.4);
+  }
+
+  .hero-scroll svg { width: 16px; height: 16px; color: rgba(200,165,90,0.4); }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 1.5rem; }
+
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-eyebrow {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--brown);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .section-body {
+    font-size: 0.9rem;
+    line-height: 1.85;
+    color: var(--text-muted);
+    max-width: 520px;
+  }
+
+  .section-rule {
+    width: 40px;
+    height: 1px;
+    background: var(--gold-light);
+    margin: 1.2rem 0;
+    opacity: 0.6;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-photo {
+    aspect-ratio: 4/5;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--brown);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .photo-placeholder-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-style: italic;
+    color: rgba(200,165,90,0.3);
+  }
+
+  .photo-placeholder-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(200,165,90,0.25);
+  }
+
+  .about-photo-frame {
+    position: absolute;
+    top: -12px; left: -12px; right: 12px; bottom: 12px;
+    border: 1px solid rgba(200,165,90,0.3);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+
+  /* ── STATS ── */
+  .stats-band {
+    background: var(--brown);
+    padding: 3.5rem 1.5rem;
+  }
+
+  .stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-label {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(200,165,90,0.5);
+  }
+
+  .stat-divider {
+    width: 1px;
+    background: rgba(200,165,90,0.15);
+    align-self: stretch;
+    margin: 0.5rem 0;
+  }
+
+  /* ── ESPECIALIDADES ── */
+  .especialidades { background: var(--cream-dark); }
+
+  .esp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .esp-card {
+    background: var(--white);
+    border: 0.5px solid var(--divider);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+
+  .esp-card:hover { transform: translateY(-4px); }
+
+  .esp-photo {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .esp-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+  }
+
+  .esp-card:hover .esp-photo img { transform: scale(1.04); }
+
+  .esp-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--brown);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .esp-photo-placeholder svg {
+    width: 40px;
+    height: 40px;
+    color: rgba(200,165,90,0.2);
+  }
+
+  .esp-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--gold-light);
+    color: var(--brown);
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .esp-body { padding: 1.25rem; }
+
+  .esp-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--brown);
+    margin-bottom: 0.4rem;
+  }
+
+  .esp-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ── FOTOS INSTAGRAM ── */
+  .instagram-section { background: var(--white); }
+
+  .insta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .insta-item {
+    aspect-ratio: 1;
+    background: var(--cream-dark);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .insta-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+
+  .insta-item:hover img { transform: scale(1.06); }
+
+  .insta-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(42,22,8,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .insta-item:hover .insta-overlay { opacity: 1; }
+
+  .insta-overlay svg { width: 28px; height: 28px; color: white; }
+
+  .insta-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--cream-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .insta-cta {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .insta-cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--brown);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold-light);
+    padding-bottom: 3px;
+    transition: color 0.2s;
+  }
+
+  .insta-cta a:hover { color: var(--gold); }
+
+  /* ── ESPAÇO ── */
+  .espaco-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .espaco-item {
+    position: relative;
+    aspect-ratio: 16/10;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--brown);
+  }
+
+  .espaco-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .espaco-item-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem 1.25rem;
+    background: linear-gradient(to top, rgba(42,22,8,0.85), transparent);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #F0E0B8;
+  }
+
+  /* ── HORÁRIOS ── */
+  .horarios { background: var(--brown); }
+
+  .horarios .section-eyebrow { color: var(--gold-light); opacity: 0.7; }
+  .horarios .section-title { color: #F0E0B8; }
+  .horarios .section-body { color: rgba(200,165,90,0.6); }
+  .horarios .section-rule { background: var(--gold-light); }
+
+  .horario-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .horario-card {
+    background: rgba(240,224,184,0.05);
+    border: 1px solid rgba(200,165,90,0.15);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .horario-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--gold-light);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(200,165,90,0.15);
+  }
+
+  .horario-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(200,165,90,0.08);
+    font-size: 0.82rem;
+  }
+
+  .horario-row:last-child { border-bottom: none; }
+  .horario-dia { color: rgba(200,165,90,0.6); font-weight: 300; }
+  .horario-hora { color: #F0E0B8; font-weight: 400; }
+  .horario-fechado { color: rgba(200,165,90,0.3); font-style: italic; }
+
+  /* ── LOCATION ── */
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 2rem;
+  }
+
+  .location-info { }
+
+  .location-address {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 2;
+    margin-bottom: 1.5rem;
+  }
+
+  .location-address strong {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+
+  .location-map {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--divider);
+    height: 320px;
+    background: var(--cream-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .location-map iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .contact-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--cream-dark);
+    border: 1px solid var(--divider);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    font-size: 0.82rem;
+    color: var(--brown);
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.15s;
+  }
+
+  .contact-pill:hover { border-color: var(--gold-light); color: var(--gold); }
+  .contact-pill svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* ── CTA BAND ── */
+  .cta-band {
+    background: var(--brown);
+    padding: 5rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-band::before {
+    content: 'Extremo';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20rem;
+    font-style: italic;
+    color: rgba(200,165,90,0.03);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: #F0E0B8;
+    margin-bottom: 0.75rem;
+    position: relative;
+  }
+
+  .cta-sub {
+    font-size: 0.78rem;
+    color: rgba(200,165,90,0.55);
+    letter-spacing: 0.08em;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .cta-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1A0D04;
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-style: italic;
+    color: rgba(200,165,90,0.5);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(200,165,90,0.25);
+    margin-bottom: 2rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .footer-links a {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(200,165,90,0.3);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: rgba(200,165,90,0.6); }
+
+  .footer-copy {
+    font-size: 0.65rem;
+    color: rgba(200,165,90,0.2);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .nav-mobile-btn { display: flex; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-photo { aspect-ratio: 3/2; order: -1; }
+    .about-photo-frame { display: none; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .stat-divider { display: none; }
+    .esp-grid { grid-template-columns: 1fr; }
+    .insta-grid { grid-template-columns: repeat(2, 1fr); }
+    .espaco-grid { grid-template-columns: 1fr; }
+    .horario-grid { grid-template-columns: 1fr; }
+    .location-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Extremo</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#especialidades">Especialidades</a></li>
+    <li><a href="#espaco">Espaço</a></li>
+    <li><a href="#horarios">Horários</a></li>
+    <li><a href="#localizar">Localização</a></li>
+  </ul>
+  <a href="encomendas.html" class="nav-cta">Encomendar</a>
+  <div class="nav-mobile-btn" onclick="this.classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Arnoso Santa Eulália · V.N. Famalicão</div>
+    <div class="hero-title">Extremo</div>
+    <div class="hero-rule"></div>
+    <div class="hero-tagline">Padaria · Pastelaria · Pizzaria · Hamburgueria</div>
+    <div class="hero-btns">
+      <a href="index.html" class="btn-gold">Ver ementa</a>
+      <a href="encomendas.html" class="btn-outline">Encomendar takeaway</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Descobrir</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-band">
+  <div class="stats-inner">
+    <div>
+      <div class="stat-num">2009</div>
+      <div class="stat-label">Ano de abertura</div>
+    </div>
+    <div>
+      <div class="stat-num">13+</div>
+      <div class="stat-label">Pizzas artesanais</div>
+    </div>
+    <div>
+      <div class="stat-num">2</div>
+      <div class="stat-label">Espaços distintos</div>
+    </div>
+    <div>
+      <div class="stat-num">♡</div>
+      <div class="stat-label">Confeccionado com amor</div>
+    </div>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div style="position:relative">
+        <div class="about-photo-frame"></div>
+        <div class="about-photo">
+          <img src="hero-francesinha.jpg" alt="Francesinha da Extremo com molho da casa" loading="lazy">
+        </div>
+      </div>
+      <div>
+        <div class="section-eyebrow">A nossa história</div>
+        <div class="section-title">Confeccionamos amor e servimo-lo com carinho</div>
+        <div class="section-rule"></div>
+        <div class="section-body">
+          <p style="margin-bottom:1rem">A Extremo nasceu da paixão pela boa comida e pelo acolhimento genuíno. No coração de Arnoso Santa Eulália, criámos um espaço onde cada visita é uma experiência — seja ao pequeno-almoço, ao almoço ou ao jantar.</p>
+          <p style="margin-bottom:1rem">O nosso espaço tem dois ambientes distintos: a cafetaria, perfeita para um café e um bolo, e o restaurante, onde servimos as nossas pizzas artesanais, francesinhas com o molho da casa e hambúrgueres que já fidelizaram clientes de toda a região.</p>
+          <p>A esplanada coberta completa a experiência, ideal para os dias de sol do Minho.</p>
+        </div>
+        <div style="margin-top:2rem">
+          <a href="index.html" class="btn-gold" style="display:inline-block">Ver a ementa completa</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESPECIALIDADES -->
+<section id="especialidades" class="especialidades">
+  <div class="section-inner">
+    <div class="section-eyebrow">O que nos distingue</div>
+    <div class="section-title">As nossas especialidades</div>
+    <div class="section-rule"></div>
+
+    <div class="esp-grid">
+
+      <div class="esp-card">
+        <div class="esp-photo">
+          <img src="esp-francesinha.jpg" alt="Francesinha Extremo" loading="lazy">
+          <span class="esp-tag">Especialidade da casa</span>
+        </div>
+        <div class="esp-body">
+          <div class="esp-name">Francesinha com molho da casa</div>
+          <div class="esp-desc">Pão de forma, bife, ovo, queijo, fiambre, chouriço e bacon. O nosso molho de francesinha é o segredo que faz a diferença. Acompanha batata frita.</div>
+        </div>
+      </div>
+
+      <div class="esp-card">
+        <div class="esp-photo">
+          <img src="esp-pizza.jpg" alt="Pizza artesanal Extremo" loading="lazy">
+          <span class="esp-tag">Popular</span>
+        </div>
+        <div class="esp-body">
+          <div class="esp-name">Pizzas artesanais</div>
+          <div class="esp-desc">13 variedades, incluindo a nossa pizza Extremo com chouriço, fiambre, cogumelos, azeitonas e queijo mozzarella. Em tamanho pequeno, médio ou familiar.</div>
+        </div>
+      </div>
+
+      <div class="esp-card">
+        <div class="esp-photo">
+          <img src="esp-brunch.jpg" alt="Tábua de Brunch Extremo" loading="lazy">
+          <span class="esp-tag">Brunch</span>
+        </div>
+        <div class="esp-body">
+          <div class="esp-name">Tábua de Brunch</div>
+          <div class="esp-desc">Pão, croissant, queijo e fiambre, manteiga e doces, 4 panquecas, iogurte, granola, fruta fresca e 2 miniaturas. Para partilhar e saborear devagar.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM / FOTOS -->
+<section class="instagram-section" id="galeria">
+  <div class="section-inner">
+    <div class="section-eyebrow">@extremopadariapastelaria</div>
+    <div class="section-title">Momentos da Extremo</div>
+    <div class="section-rule"></div>
+    <div class="section-body">Siga-nos no Instagram para ver as novidades, pratos do dia e promoções especiais.</div>
+
+    <!-- Instagram feed embed -->
+    <div class="insta-grid" id="insta-grid">
+      <!-- Substituir pelos embeds reais ou usar LightWidget -->
+      <a href="https://www.instagram.com/extremopadariapastelaria" target="_blank" class="insta-item">
+        <img src="gallery-brunch2.jpg" alt="Tábua de brunch" loading="lazy">
+        <div class="insta-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+      </a>
+      <a href="https://www.instagram.com/extremopadariapastelaria" target="_blank" class="insta-item">
+        <img src="hero-francesinha.jpg" alt="Francesinha" loading="lazy">
+        <div class="insta-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+      </a>
+      <a href="https://www.instagram.com/extremopadariapastelaria" target="_blank" class="insta-item">
+        <img src="esp-pizza.jpg" alt="Pizza artesanal" loading="lazy">
+        <div class="insta-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+      </a>
+      <a href="https://www.instagram.com/extremopadariapastelaria" target="_blank" class="insta-item">
+        <img src="gallery-caixa.jpg" alt="Caixa de pizza Extremo" loading="lazy">
+        <div class="insta-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+      </a>
+    </div>
+
+    <div class="insta-cta">
+      <a href="https://www.instagram.com/extremopadariapastelaria" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Ver mais no Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ESPAÇO -->
+<section id="espaco" style="background:var(--cream-dark)">
+  <div class="section-inner">
+    <div class="section-eyebrow">O nosso espaço</div>
+    <div class="section-title">Dois ambientes, uma experiência</div>
+    <div class="section-rule"></div>
+    <div class="section-body">Esplanada coberta, cafetaria e restaurante com decoração moderna e acolhedora. Estacionamento gratuito à porta.</div>
+
+    <div class="espaco-grid">
+      <div class="espaco-item">
+        <img src="gallery-brunch3.jpg" alt="Cafetaria Extremo" loading="lazy">
+        <div class="espaco-item-label">Cafetaria & Pastelaria</div>
+      </div>
+      <div class="espaco-item">
+        <img src="gallery-pizza2.jpg" alt="Restaurante Extremo" loading="lazy">
+        <div class="espaco-item-label">Restaurante & Pizzaria</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HORÁRIOS -->
+<section id="horarios" class="horarios">
+  <div class="section-inner">
+    <div class="section-eyebrow">Quando nos visitar</div>
+    <div class="section-title">Horários de funcionamento</div>
+    <div class="section-rule"></div>
+
+    <div class="horario-grid">
+      <div class="horario-card">
+        <div class="horario-card-title">Cafetaria & Pastelaria</div>
+        <div class="horario-row"><span class="horario-dia">Segunda</span><span class="horario-fechado">Encerrado</span></div>
+        <div class="horario-row"><span class="horario-dia">Terça a Sexta</span><span class="horario-hora">07:00 – 20:00</span></div>
+        <div class="horario-row"><span class="horario-dia">Sábado</span><span class="horario-hora">07:30 – 20:00</span></div>
+        <div class="horario-row"><span class="horario-dia">Domingo</span><span class="horario-fechado">Encerrado</span></div>
+      </div>
+      <div class="horario-card">
+        <div class="horario-card-title">Restaurante & Pizzaria</div>
+        <div class="horario-row"><span class="horario-dia">Segunda</span><span class="horario-fechado">Encerrado</span></div>
+        <div class="horario-row"><span class="horario-dia">Terça a Sexta</span><span class="horario-hora">12:00 – 14:30 · 19:00 – 22:00</span></div>
+        <div class="horario-row"><span class="horario-dia">Sábado</span><span class="horario-hora">12:00 – 14:30 · 19:00 – 22:30</span></div>
+        <div class="horario-row">
+          <span class="horario-dia">Domingo</span>
+          <span style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+            <span class="horario-hora" style="font-size:0.78rem">18:30 – 21:30</span>
+            <span style="font-size:0.62rem;color:var(--gold-light);letter-spacing:0.08em">Takeaway apenas</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem;font-size:0.72rem;color:rgba(200,165,90,0.35);font-style:italic;text-align:center">
+      Horários sujeitos a alteração em feriados e épocas especiais.
+    </div>
+  </div>
+</section>
+
+<!-- LOCALIZAÇÃO -->
+<section id="localizar">
+  <div class="section-inner">
+    <div class="section-eyebrow">Como chegar</div>
+    <div class="section-title">Encontre-nos</div>
+    <div class="section-rule"></div>
+
+    <div class="location-grid">
+      <div class="location-info">
+        <div class="location-address">
+          <strong>Morada</strong>
+          Rua da Carvalheira, 658<br>
+          Arnoso Santa Eulália<br>
+          4775 · Vila Nova de Famalicão
+        </div>
+        <div class="location-address">
+          <strong>Contactos</strong>
+          912 146 436 (rede móvel)<br>
+          252 963 620 (rede fixa)
+        </div>
+        <div style="margin-top:1.5rem">
+          <a href="tel:912146436" class="contact-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.09 6.09l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+            Ligar
+          </a>
+          <a href="https://wa.me/351912146436" target="_blank" class="contact-pill">
+            <svg viewBox="0 0 24 24" fill="#25D366" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+          <a href="https://maps.google.com/?q=Rua+da+Carvalheira+658+Arnoso+Santa+Eulalia+Vila+Nova+Famalicao" target="_blank" class="contact-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="location-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3031.2!2d-8.425!3d41.42!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sRua+da+Carvalheira+658+Arnoso+Santa+Eulalia!5e0!3m2!1spt!2spt!4v1"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="cta-title">Pronto para encomendar?</div>
+  <div class="cta-sub">Takeaway disponível com pagamento antecipado por MBWay</div>
+  <div class="cta-btns">
+    <a href="encomendas.html" class="btn-gold">Fazer encomenda</a>
+    <a href="index.html" class="btn-outline">Ver ementa</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Extremo</div>
+    <div class="footer-tagline">Padaria · Pastelaria · Pizzaria · Hamburgueria</div>
+    <div class="footer-links">
+      <a href="index.html">Ementa</a>
+      <a href="encomendas.html">Takeaway</a>
+      <a href="links.html">Links</a>
+      <a href="https://www.instagram.com/extremopadariapastelaria" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/p/Padaria-Pastelaria-Extremo-100063703625635" target="_blank">Facebook</a>
+    </div>
+    <div class="footer-copy">
+      © 2025 Extremo · Rua da Carvalheira, 658 · Arnoso Santa Eulália · V.N. Famalicão
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

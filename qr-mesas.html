@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extremo — QR Codes das Mesas</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brown: #2A1608; --gold: #C8A55A; --gold-dark: #9A7A3A;
+    --cream: #FAFAF6; --cream-dark: #F2EDE0; --divider: #E0D5C0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #E8E0D0; font-family: 'Jost', sans-serif; padding: 1.5rem; }
+
+  .screen-only { }
+  .controls { background: var(--cream); border: 1px solid var(--divider); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+  .controls label { font-size: 0.75rem; color: var(--brown); display: flex; align-items: center; gap: 0.5rem; }
+  .controls input[type=number] { width: 60px; padding: 0.4rem 0.5rem; border: 1px solid var(--divider); border-radius: 4px; font-family: 'Jost', sans-serif; font-size: 0.85rem; color: var(--brown); }
+  .controls input[type=text] { width: 260px; padding: 0.4rem 0.7rem; border: 1px solid var(--divider); border-radius: 4px; font-family: 'Jost', sans-serif; font-size: 0.82rem; color: var(--brown); }
+  .btn-gen { background: var(--brown); color: #F0E0B8; font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.6rem 1.2rem; border: none; border-radius: 4px; cursor: pointer; }
+  .btn-print { background: var(--gold); color: var(--brown); font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.6rem 1.2rem; border: none; border-radius: 4px; cursor: pointer; }
+  .note { font-size: 0.72rem; color: var(--gold-dark); }
+
+  .cards-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
+
+  /* Each card: 85.6mm × 54mm at 96dpi ≈ 323 × 204px screen */
+  .card {
+    width: 323px; height: 204px;
+    background: var(--cream);
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Left panel */
+  .card-left {
+    width: 110px;
+    background: var(--brown);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .card-left::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 12px; bottom: 12px;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  }
+  .card-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: #F0E0B8; line-height: 1; }
+  .card-rule { width: 36px; height: 1px; background: var(--gold); opacity: 0.6; }
+  .card-mesa-label { font-size: 7px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+  .card-mesa-num { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: #F0E0B8; line-height: 1; }
+  .card-address { font-size: 6.5px; color: rgba(200,165,90,0.55); letter-spacing: 0.04em; text-align: center; line-height: 1.5; padding: 0 8px; }
+
+  /* Right panel */
+  .card-right { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px 14px; gap: 6px; }
+  .card-cta { font-size: 7.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brown); text-align: center; }
+  .qr-wrap { border: 5px solid var(--brown); border-radius: 5px; padding: 4px; background: white; }
+  .qr-wrap canvas, .qr-wrap img { display: block; }
+  .card-url { font-size: 6px; color: var(--gold-dark); letter-spacing: 0.04em; text-align: center; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .screen-only { display: none !important; }
+    .cards-grid { gap: 8mm; }
+    .card { box-shadow: none; break-inside: avoid; border-color: #CCC; }
+    @page { size: A4; margin: 15mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="screen-only">
+  <div class="controls">
+    <label>Mesas de <input type="number" id="from" value="1" min="1"></label>
+    <label>até <input type="number" id="to" value="15" min="1" max="50"></label>
+    <label>URL base: <input type="text" id="base-url" value="https://extremo-ementa.netlify.app/mesa.html"></label>
+    <button class="btn-gen" onclick="generate()">Gerar QR Codes</button>
+    <button class="btn-print" onclick="window.print()">Imprimir</button>
+    <span class="note">Tamanho real: 85,6 × 54 mm (padrão PVC)</span>
+  </div>
+</div>
+
+<div class="cards-grid" id="grid"></div>
+
+<script>
+function generate() {
+  const from = parseInt(document.getElementById('from').value);
+  const to = parseInt(document.getElementById('to').value);
+  const baseUrl = document.getElementById('base-url').value.trim();
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+
+  for (let i = from; i <= to; i++) {
+    const url = baseUrl + '?mesa=' + i;
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    card.innerHTML = `
+      <div class="card-left">
+        <div class="card-logo">Extremo</div>
+        <div class="card-rule"></div>
+        <div class="card-mesa-label">Mesa</div>
+        <div class="card-mesa-num">${i}</div>
+        <div class="card-rule"></div>
+        <div class="card-address">Arnoso Sta. Eulália<br>V.N. Famalicão</div>
+      </div>
+      <div class="card-right">
+        <div class="card-cta">Leia para ver a ementa<br>e fazer o seu pedido</div>
+        <div class="qr-wrap" id="qr-${i}"></div>
+        <div class="card-url">extremo-ementa.netlify.app</div>
+      </div>`;
+
+    grid.appendChild(card);
+
+    new QRCode(document.getElementById('qr-' + i), {
+      text: url,
+      width: 100,
+      height: 100,
+      colorDark: '#2A1608',
+      colorLight: '#FFFFFF',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  }
+}
+
+generate();
+</script>
+</body>
+</html>

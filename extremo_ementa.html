@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Extremo — Ementa</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF6;
+    --bg-alt: #F2EDE0;
+    --gold: #9A7A3A;
+    --gold-light: #C8A55A;
+    --brown: #2A1608;
+    --brown-mid: #5C3D1E;
+    --text: #1C0D04;
+    --text-muted: #7A5A3A;
+    --divider: #E0D5C0;
+    --white: #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; overflow-x: hidden; }
+
+  .hero { background: var(--brown); padding: 3rem 1.5rem 2.2rem; text-align: center; position: relative; }
+  .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold-light), transparent); }
+  .hero-logo { font-family: 'Cormorant Garamond', serif; font-size: 3.8rem; font-weight: 400; font-style: italic; color: #F0E0B8; line-height: 1; }
+  .hero-tagline { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.28em; color: var(--gold-light); text-transform: uppercase; margin-top: 0.7rem; }
+  .hero-rule { width: 50px; height: 1px; background: var(--gold-light); margin: 1.1rem auto; opacity: 0.5; }
+  .hero-address { font-size: 0.72rem; color: rgba(200,165,90,0.6); letter-spacing: 0.05em; line-height: 1.8; }
+
+  .nav-wrap { position: sticky; top: 0; z-index: 100; background: var(--brown); border-bottom: 1px solid rgba(200,165,90,0.2); }
+  .nav-tabs { display: flex; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding: 0 0.25rem; }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tab { flex-shrink: 0; padding: 0.85rem 1rem; font-size: 0.62rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(200,165,90,0.4); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .nav-tab.active { color: #F0E0B8; border-bottom-color: var(--gold-light); }
+  .nav-tab:hover:not(.active) { color: rgba(200,165,90,0.7); }
+
+  .section { display: none; animation: fadeIn 0.25s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
+  .sec-head { background: var(--brown); padding: 1.8rem 1.5rem 1.5rem; text-align: center; }
+  .sec-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400; font-style: italic; color: #F0E0B8; line-height: 1; }
+  .sec-sub { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-light); margin-top: 0.4rem; }
+  .sec-rule { width: 36px; height: 1px; background: var(--gold-light); margin: 1rem auto 0; opacity: 0.45; }
+
+  .cat { background: var(--bg-alt); padding: 0.65rem 1.5rem; font-size: 0.58rem; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); border-top: 1px solid var(--divider); border-bottom: 1px solid var(--divider); margin-top: 0.5rem; }
+
+  .item { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; padding: 1.1rem 1.5rem; background: var(--white); border-bottom: 1px solid var(--divider); }
+  .item-info { flex: 1; min-width: 0; }
+  .item-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; color: var(--brown); line-height: 1.25; }
+  .item-desc { font-size: 0.76rem; color: var(--text-muted); margin-top: 0.25rem; line-height: 1.55; font-weight: 400; }
+  .item-note { font-size: 0.7rem; font-style: italic; color: var(--text-muted); margin-top: 0.2rem; }
+  .tag { display: inline-block; font-size: 0.52rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; background: var(--brown); color: #F0E0B8; padding: 2px 7px; border-radius: 2px; margin-top: 0.45rem; }
+  .tag.veg { background: #3D6B2A; }
+  .tag.pop { background: var(--gold); color: var(--white); }
+  .item-price { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--brown); white-space: nowrap; text-align: right; padding-top: 2px; min-width: 52px; }
+  .price-note { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; color: var(--text-muted); display: block; margin-top: 2px; }
+
+  .pizza-header { display: flex; justify-content: flex-end; gap: 0.6rem; padding: 0.7rem 1.5rem; background: var(--bg-alt); border-bottom: 1px solid var(--divider); flex-wrap: wrap; }
+  .pill { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.06em; color: var(--brown-mid); background: var(--white); border: 1px solid var(--divider); border-radius: 20px; padding: 3px 10px; }
+  .pizza-item { background: var(--white); border-bottom: 1px solid var(--divider); padding: 1rem 1.5rem; }
+  .pizza-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .pizza-name { font-family: 'Cormorant Garamond', serif; font-size: 1.12rem; font-weight: 600; color: var(--brown); line-height: 1.2; }
+  .pizza-desc { font-size: 0.74rem; color: var(--text-muted); margin-top: 0.2rem; line-height: 1.5; font-weight: 400; }
+  .pizza-prices { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; font-family: 'Cormorant Garamond', serif; font-size: 0.88rem; font-weight: 600; color: var(--brown); white-space: nowrap; padding-top: 2px; }
+  .pizza-prices span { display: flex; gap: 4px; align-items: center; }
+  .lbl { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 500; letter-spacing: 0.08em; color: var(--text-muted); min-width: 14px; }
+
+  .bev-row { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.5rem; background: var(--white); border-bottom: 1px solid var(--divider); gap: 1rem; }
+  .bev-name { font-size: 0.88rem; color: var(--brown); font-weight: 400; line-height: 1.4; }
+  .bev-sub { font-size: 0.68rem; color: var(--text-muted); margin-top: 1px; }
+  .bev-price { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--brown); white-space: nowrap; }
+
+  .spacer { height: 2rem; background: var(--bg); }
+
+  .footer { background: var(--brown); color: rgba(200,165,90,0.5); text-align: center; padding: 2.5rem 1.5rem; font-size: 0.72rem; letter-spacing: 0.07em; line-height: 2; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-style: italic; color: #F0E0B8; font-weight: 400; }
+  .footer-rule { width: 40px; height: 1px; background: var(--gold-light); margin: 0.9rem auto; opacity: 0.35; }
+  .footer a { color: var(--gold-light); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-logo">Extremo</div>
+  <div class="hero-tagline">Padaria · Pastelaria · Pizzaria · Hamburgueria</div>
+  <div class="hero-rule"></div>
+  <div class="hero-address">Rua da Carvalheira, 658<br>Arnoso Santa Eulália · V.N. Famalicão</div>
+</div>
+
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="show('brunch',this)">Brunch</div>
+    <div class="nav-tab" onclick="show('almoco',this)">Almoço</div>
+    <div class="nav-tab" onclick="show('molho',this)">Com Molho</div>
+    <div class="nav-tab" onclick="show('pregos',this)">Pregos</div>
+    <div class="nav-tab" onclick="show('pizzas',this)">Pizzas</div>
+    <div class="nav-tab" onclick="show('bebidas',this)">Bebidas</div>
+  </div>
+</div>
+
+<!-- BRUNCH -->
+<div id="brunch" class="section active">
+  <div class="sec-head"><div class="sec-title">Para Provar...</div><div class="sec-sub">O Melhor Brunch</div><div class="sec-rule"></div></div>
+  <div class="cat">Menu Pão d'Água</div>
+  <div class="item"><div class="item-info"><div class="item-name">Pão d'Água</div><div class="item-desc">Acompanhamento à escolha: manteiga, doce framboesa, Nutella ou Kinder Bueno</div></div><div class="item-price">0,70€<span class="price-note">+ 0,70€ acomp.</span></div></div>
+  <div class="cat">Brunch</div>
+  <div class="item"><div class="item-info"><div class="item-name">Tosta com Ovos Mexidos e Bacon</div></div><div class="item-price">5,50€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Torradas Especiais</div><div class="item-desc">Pão de noz ou cereais com manteiga e doce</div></div><div class="item-price">2,30€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Iogurte Natural</div><div class="item-desc">Com 2 acompanhamentos: framboesa, mirtilo, kiwi, banana, Oreo, muesli, granola, flocos de aveia, nozes, Kinder Bueno, pintarolas ou Kit Kat</div><div class="item-desc" style="margin-top:0.3rem">+ Topping: doce framboesa, Nutella, Kinder Bueno, Lotus, manteiga de amendoim ou mel</div></div><div class="item-price">4,00€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Panquecas / Waffles</div><div class="item-desc">Com topping e 3 acompanhamentos à escolha</div><span class="tag pop">Popular</span></div><div class="item-price">6,00€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Tábua de Brunch</div><div class="item-desc">Pão, croissant, queijo e fiambre, menús (manteiga, doce, Nutella, Kinder Bueno), 4 panquecas, iogurte, granola, fruta e 2 miniaturas</div><span class="tag">Para partilhar</span></div><div class="item-price">20,00€</div></div>
+  <div class="cat">Para Acompanhar</div>
+  <div class="item"><div class="item-info"><div class="item-name">Sumo Natural de Laranja</div></div><div class="item-price">3,50€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Cappuccino</div></div><div class="item-price">1,50€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Chocolate Quente</div></div><div class="item-price">2,50€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Meia de Leite</div></div><div class="item-price">1,10€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Compal</div></div><div class="item-price">1,50€</div></div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ALMOÇO -->
+<div id="almoco" class="section">
+  <div class="sec-head"><div class="sec-title">Pausa d'Almoço</div><div class="sec-rule"></div></div>
+  <div class="cat">Rápido & Saboroso</div>
+  <div class="item"><div class="item-info"><div class="item-name">Sopa</div></div><div class="item-price">2,50€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Pão com Chouriço e Queijo</div></div><div class="item-price">3,50€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Pão com Queijo, Fiambre, Salsicha e Ketchup</div></div><div class="item-price">3,50€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Sandes</div><div class="item-desc">Delícias, frango ou atum — com pasta, ovo, alface e tomate</div></div><div class="item-price">6,00€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Pão com Panado</div><div class="item-desc">Com queijo, fiambre, ovo e alface</div></div><div class="item-price">5,50€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Prego no Pão</div><div class="item-desc">Bife, pão, queijo, fiambre e ovo</div></div><div class="item-price">7,50€</div></div>
+  <div class="cat">Pratos com Sabor</div>
+  <div class="item"><div class="item-info"><div class="item-name">Panados de Frango</div><div class="item-desc">Com arroz, batata frita e salada</div></div><div class="item-price">10,00€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Saladas</div><div class="item-desc">Frango, atum ou delícias do mar — com alface, tomate cherry, mini queijo mozzarella e croutons</div><span class="tag veg">Leve</span></div><div class="item-price">8,00€</div></div>
+  <div class="spacer"></div>
+</div>
+
+<!-- COM MOLHO -->
+<div id="molho" class="section">
+  <div class="sec-head"><div class="sec-title">Com o Nosso Molho</div><div class="sec-rule"></div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Francesinha</div><div class="item-desc">Pão de forma, bife, ovo, queijo, fiambre, chouriço, bacon, batata frita e molho de francesinha</div><div class="item-note">Opção: bife de frango</div><span class="tag">Especialidade da casa</span></div><div class="item-price">12,00€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Cachorro Especial</div><div class="item-desc">Pão de cachorro, queijo, fiambre, chouriço, salsicha, batata frita e molho de francesinha</div></div><div class="item-price">8,00€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Hambúrguesinha</div><div class="item-desc">Carne de vaca ou frango — pão, queijo cheddar, queijo edam, ovo, bacon, molhos, batata frita e molho de francesinha</div></div><div class="item-price">11,00€</div></div>
+  <div class="spacer"></div>
+</div>
+
+<!-- PREGOS -->
+<div id="pregos" class="section">
+  <div class="sec-head"><div class="sec-title">Pregos & Hambúrgueres</div><div class="sec-rule"></div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Prego no Prato</div><div class="item-desc">Bife, ovo, arroz, batata e salada</div><div class="item-note">Opção: bife de frango</div></div><div class="item-price">11,00€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Prego no Bolo do Caco</div><div class="item-desc">Bife, bolo do caco, queijo cheddar, queijo edam, ovo, bacon e batata frita</div></div><div class="item-price">11,00€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Hambúrguer</div><div class="item-desc">Carne de vaca ou frango — pão, queijo cheddar, queijo edam, ovo, bacon, molhos, batata frita e orégãos</div></div><div class="item-price">9,00€</div></div>
+  <div class="item"><div class="item-info"><div class="item-name">Menú Infantil</div><div class="item-desc">Ovo, salsicha e batata frita</div></div><div class="item-price">5,50€</div></div>
+  <div class="spacer"></div>
+</div>
+
+<!-- PIZZAS -->
+<div id="pizzas" class="section">
+  <div class="sec-head"><div class="sec-title">Pizzas</div><div class="sec-rule"></div></div>
+  <div class="pizza-header">
+    <span class="pill">Pequena — 10€</span>
+    <span class="pill">Média — 14€</span>
+    <span class="pill">Familiar — 18€</span>
+  </div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">Extremo <span style="font-family:'Jost';font-size:0.52rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;background:var(--brown);color:#F0E0B8;padding:2px 6px;border-radius:2px;vertical-align:middle">Casa</span></div><div class="pizza-desc">Molho de tomate, chouriço, fiambre, cogumelos, azeitonas e queijo mozzarella</div></div><div class="pizza-prices"><span><span class="lbl">P</span>10€</span><span><span class="lbl">M</span>14€</span><span><span class="lbl">F</span>18€</span></div></div></div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">Ananás</div><div class="pizza-desc">Molho de tomate, fiambre, bacon, ananás e queijo mozzarella</div></div><div class="pizza-prices"><span><span class="lbl">P</span>10€</span><span><span class="lbl">M</span>14€</span><span><span class="lbl">F</span>18€</span></div></div></div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">4 Estações</div><div class="pizza-desc">Molho de tomate, chouriço, fiambre, cogumelos, pimento, queijo mozzarella e orégãos</div></div><div class="pizza-prices"><span><span class="lbl">P</span>10€</span><span><span class="lbl">M</span>14€</span><span><span class="lbl">F</span>18€</span></div></div></div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">Mix</div><div class="pizza-desc">Molho de tomate, fiambre, cogumelos, salsicha, ananás, queijo mozzarella e orégãos</div></div><div class="pizza-prices"><span><span class="lbl">P</span>10€</span><span><span class="lbl">M</span>14€</span><span><span class="lbl">F</span>18€</span></div></div></div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">Atum</div><div class="pizza-desc">Molho de tomate, fiambre, atum, azeitonas, queijo mozzarella e orégãos</div></div><div class="pizza-prices"><span><span class="lbl">P</span>10€</span><span><span class="lbl">M</span>14€</span><span><span class="lbl">F</span>18€</span></div></div></div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">Chicken</div><div class="pizza-desc">Molho de tomate, frango, cogumelos, azeitonas, queijo mozzarella e orégãos</div></div><div class="pizza-prices"><span><span class="lbl">P</span>10€</span><span><span class="lbl">M</span>14€</span><span><span class="lbl">F</span>18€</span></div></div></div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">Pepperoni</div><div class="pizza-desc">Molho de tomate, fiambre, queijo mozzarella, pepperoni e orégãos</div></div><div class="pizza-prices"><span><span class="lbl">P</span>10€</span><span><span class="lbl">M</span>14€</span><span><span class="lbl">F</span>18€</span></div></div></div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">Vegetariana</div><div class="pizza-desc">Molho de tomate, pimentos, milho, azeitonas, queijo mozzarella e orégãos</div><span class="tag veg" style="display:inline-block;margin-top:0.4rem">Veggie</span></div><div class="pizza-prices"><span><span class="lbl">P</span>10€</span><span><span class="lbl">M</span>14€</span><span><span class="lbl">F</span>18€</span></div></div></div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">Bacon</div><div class="pizza-desc">Molho de tomate, bacon, fiambre, chouriço e queijo mozzarella</div></div><div class="pizza-prices"><span><span class="lbl">P</span>10€</span><span><span class="lbl">M</span>14€</span><span><span class="lbl">F</span>18€</span></div></div></div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">Onion</div><div class="pizza-desc">Molho de tomate, cogumelos, fiambre, cebola, queijo mozzarella e orégãos</div></div><div class="pizza-prices"><span><span class="lbl">P</span>10€</span><span><span class="lbl">M</span>14€</span><span><span class="lbl">F</span>18€</span></div></div></div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">Queijo e Fiambre</div><div class="pizza-desc">Molho de tomate, fiambre e queijo mozzarella</div></div><div class="pizza-prices"><span><span class="lbl">P</span>10€</span><span><span class="lbl">M</span>14€</span><span><span class="lbl">F</span>18€</span></div></div></div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">Margarita</div><div class="pizza-desc">Molho de tomate e queijo mozzarella</div><span class="tag veg" style="display:inline-block;margin-top:0.4rem">Veggie</span></div><div class="pizza-prices"><span><span class="lbl">P</span>10€</span><span><span class="lbl">M</span>14€</span><span><span class="lbl">F</span>18€</span></div></div></div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">Bolonhesa</div><div class="pizza-desc">Molho de tomate, carne picada e queijo mozzarella</div></div><div class="pizza-prices"><span><span class="lbl">P</span>10€</span><span><span class="lbl">M</span>14€</span><span><span class="lbl">F</span>18€</span></div></div></div>
+  <div class="cat" style="margin-top:0.5rem">Bôla de Carne</div>
+  <div class="pizza-item"><div class="pizza-row"><div><div class="pizza-name">Bôla de Carne</div><div class="pizza-desc">Chouriço, fiambre, bacon e queijo mozzarella</div></div><div class="pizza-prices"><span><span class="lbl">P</span>11€</span><span><span class="lbl">M</span>16€</span><span><span class="lbl">F</span>21€</span></div></div></div>
+  <div class="spacer"></div>
+</div>
+
+<!-- BEBIDAS -->
+<div id="bebidas" class="section">
+  <div class="sec-head"><div class="sec-title">Bebidas</div><div class="sec-rule"></div></div>
+  <div class="cat">Cervejas</div>
+  <div class="bev-row"><div class="bev-name">Super Bock</div><div class="bev-price">1,50€</div></div>
+  <div class="bev-row"><div class="bev-name">Sagres</div><div class="bev-price">1,50€</div></div>
+  <div class="bev-row"><div class="bev-name">Super Bock Mini</div><div class="bev-price">1,30€</div></div>
+  <div class="bev-row"><div class="bev-name">Super Bock Preta</div><div class="bev-price">1,70€</div></div>
+  <div class="bev-row"><div class="bev-name">Super Bock S/ Álcool</div><div class="bev-price">1,70€</div></div>
+  <div class="bev-row"><div class="bev-name">Heineken</div><div class="bev-price">2,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Boehmia</div><div class="bev-price">2,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Fino</div><div class="bev-price">2,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Somersby</div><div class="bev-price">3,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Erdinger</div><div class="bev-price">6,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Fransziskaner</div><div class="bev-price">6,00€</div></div>
+  <div class="bev-row"><div class="bev-name">3Monts 0,33cl</div><div class="bev-price">5,00€</div></div>
+  <div class="bev-row"><div class="bev-name">3Monts 0,75cl</div><div class="bev-price">9,00€</div></div>
+  <div class="cat">Vinhos</div>
+  <div class="bev-row"><div class="bev-name">Cruzeiro dos Arcos</div><div class="bev-price">5,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Casal Garcia</div><div class="bev-price">9,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Gazela</div><div class="bev-price">9,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Mateus Rosé</div><div class="bev-price">9,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Adega de Borba Branco</div><div class="bev-price">10,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Adega de Borba Tinto</div><div class="bev-price">10,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Caiado</div><div class="bev-price">10,00€</div></div>
+  <div class="cat">Sangrias</div>
+  <div class="bev-row"><div><div class="bev-name">Sangria 1L</div><div class="bev-sub">Frutos vermelhos ou maracujá</div></div><div class="bev-price">13,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Sangria 2L</div><div class="bev-price">22,00€</div></div>
+  <div class="cat">Água & Sumos</div>
+  <div class="bev-row"><div class="bev-name">Água 33cl</div><div class="bev-price">1,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Água 1L</div><div class="bev-price">2,00€</div></div>
+  <div class="bev-row"><div class="bev-name">Sumo Lata 33cl</div><div class="bev-price">1,80€</div></div>
+  <div class="bev-row"><div class="bev-name">Coca Cola Zero 33cl</div><div class="bev-price">1,90€</div></div>
+  <div class="spacer"></div>
+</div>
+
+<div class="footer">
+  <div class="footer-logo">Extremo</div>
+  <div class="footer-rule"></div>
+  Rua da Carvalheira, 658 · Arnoso Santa Eulália · V.N. Famalicão<br>
+  <a href="tel:252963620">252 963 620</a> · <a href="tel:912146436">912 146 436</a><br><br>
+  Confeccionamos amor e servimo-lo com carinho ♡
+</div>
+
+<script>
+  function show(id, el) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+    window.scrollTo({ top: document.querySelector('.nav-wrap').offsetTop, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Extremo — Encomendas Takeaway</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF6;
+    --bg-alt: #F2EDE0;
+    --gold: #9A7A3A;
+    --gold-light: #C8A55A;
+    --brown: #2A1608;
+    --brown-mid: #5C3D1E;
+    --text: #1C0D04;
+    --text-muted: #7A5A3A;
+    --divider: #E0D5C0;
+    --white: #FFFFFF;
+    --green: #2D6A2D;
+    --green-bg: #EDF7ED;
+    --red: #8B1A1A;
+    --red-bg: #FDEAEA;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; }
+
+  /* HERO */
+  .hero { background: var(--brown); padding: 2rem 1.5rem 1.8rem; text-align: center; position: relative; }
+  .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold-light), transparent); }
+  .hero-back { position: absolute; top: 1.2rem; left: 1.2rem; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(200,165,90,0.6); text-decoration: none; }
+  .hero-back:hover { color: var(--gold-light); }
+  .hero-logo { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; font-style: italic; color: #F0E0B8; line-height: 1; }
+  .hero-tagline { font-size: 0.58rem; font-weight: 500; letter-spacing: 0.28em; color: var(--gold-light); text-transform: uppercase; margin-top: 0.5rem; }
+  .hero-rule { width: 40px; height: 1px; background: var(--gold-light); margin: 0.9rem auto; opacity: 0.5; }
+  .hero-title { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(200,165,90,0.8); }
+
+  /* STEPS */
+  .steps { display: flex; justify-content: center; gap: 0; background: var(--brown); border-top: 1px solid rgba(200,165,90,0.15); padding: 0.75rem 1rem; }
+  .step { display: flex; align-items: center; gap: 0.4rem; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(200,165,90,0.35); }
+  .step.active { color: var(--gold-light); }
+  .step.done { color: rgba(200,165,90,0.55); }
+  .step-num { width: 18px; height: 18px; border-radius: 50%; border: 1px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 500; flex-shrink: 0; }
+  .step-arrow { color: rgba(200,165,90,0.2); margin: 0 0.5rem; font-size: 0.6rem; }
+
+  /* SECTION */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .sec-head { background: var(--brown); padding: 1.5rem; text-align: center; }
+  .sec-title { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 400; font-style: italic; color: #F0E0B8; }
+  .sec-sub { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light); margin-top: 0.35rem; }
+  .sec-rule { width: 30px; height: 1px; background: var(--gold-light); margin: 0.8rem auto 0; opacity: 0.4; }
+
+  .cat { background: var(--bg-alt); padding: 0.6rem 1.5rem; font-size: 0.56rem; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); border-top: 1px solid var(--divider); border-bottom: 1px solid var(--divider); margin-top: 0.4rem; }
+
+  /* PRODUCT ITEM */
+  .prod { display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.5rem; background: var(--white); border-bottom: 1px solid var(--divider); }
+  .prod-info { flex: 1; min-width: 0; }
+  .prod-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: var(--brown); line-height: 1.2; }
+  .prod-desc { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; line-height: 1.4; }
+  .prod-price { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: var(--brown); white-space: nowrap; min-width: 40px; text-align: right; }
+  .qty-control { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+  .qty-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--divider); background: var(--bg); color: var(--brown); font-size: 1rem; font-weight: 400; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; line-height: 1; }
+  .qty-btn:hover { border-color: var(--gold); background: var(--bg-alt); }
+  .qty-btn:active { transform: scale(0.92); }
+  .qty-num { font-size: 0.9rem; font-weight: 500; color: var(--brown); min-width: 16px; text-align: center; }
+
+  /* SIZE SELECTOR */
+  .size-row { display: flex; gap: 0.4rem; margin-top: 0.4rem; flex-wrap: wrap; }
+  .size-btn { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 12px; border: 1px solid var(--divider); background: var(--bg); color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+  .size-btn.selected { background: var(--brown); color: #F0E0B8; border-color: var(--brown); }
+
+  /* CART BAR */
+  .cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--brown); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 -4px 20px rgba(42,22,8,0.25); z-index: 200; transform: translateY(100%); transition: transform 0.3s ease; }
+  .cart-bar.visible { transform: translateY(0); }
+  .cart-info { color: #F0E0B8; }
+  .cart-count { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-light); }
+  .cart-total { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: #F0E0B8; margin-top: 1px; }
+  .cart-btn { background: var(--gold-light); color: var(--brown); font-family: 'Jost', sans-serif; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.7rem 1.4rem; border: none; border-radius: 4px; cursor: pointer; transition: background 0.15s; }
+  .cart-btn:hover { background: #D4B872; }
+
+  /* ORDER SUMMARY */
+  .summary-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 0.85rem 1.5rem; background: var(--white); border-bottom: 1px solid var(--divider); gap: 1rem; }
+  .summary-name { font-size: 0.88rem; color: var(--brown); font-weight: 400; line-height: 1.3; }
+  .summary-detail { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+  .summary-price { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: var(--brown); white-space: nowrap; }
+  .summary-total { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: var(--bg-alt); border-top: 2px solid var(--divider); }
+  .summary-total-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+  .summary-total-val { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--brown); }
+
+  /* FORM */
+  .form-section { padding: 1.25rem 1.5rem; background: var(--white); border-bottom: 1px solid var(--divider); }
+  .form-label { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; display: block; }
+  .form-input { width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--divider); border-radius: 6px; background: var(--bg); font-family: 'Jost', sans-serif; font-size: 0.9rem; color: var(--text); outline: none; transition: border-color 0.15s; }
+  .form-input:focus { border-color: var(--gold); }
+  .form-input::placeholder { color: var(--text-muted); }
+  .form-row { margin-bottom: 1rem; }
+  .form-row:last-child { margin-bottom: 0; }
+
+  /* TIME SLOTS */
+  .time-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 0.5rem; }
+  .time-slot { padding: 0.6rem 0.4rem; text-align: center; border: 1px solid var(--divider); border-radius: 6px; background: var(--bg); font-size: 0.8rem; font-weight: 500; color: var(--brown-mid); cursor: pointer; transition: all 0.15s; }
+  .time-slot:hover { border-color: var(--gold); }
+  .time-slot.selected { background: var(--brown); color: #F0E0B8; border-color: var(--brown); }
+  .time-slot.disabled { color: var(--divider); cursor: not-allowed; background: var(--bg-alt); }
+
+  /* PAYMENT */
+  .payment-box { margin: 1rem 1.5rem; background: var(--white); border: 1px solid var(--divider); border-radius: 8px; overflow: hidden; }
+  .payment-header { background: var(--brown); padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .payment-header-title { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: #F0E0B8; }
+  .payment-body { padding: 1rem; }
+  .payment-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--divider); }
+  .payment-row:last-child { border-bottom: none; }
+  .payment-key { font-size: 0.75rem; color: var(--text-muted); }
+  .payment-val { font-size: 0.88rem; font-weight: 500; color: var(--brown); letter-spacing: 0.04em; }
+  .payment-val.big { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--brown); }
+
+  /* BUTTONS */
+  .btn-primary { width: 100%; padding: 1rem; background: var(--brown); color: #F0E0B8; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; border: none; border-radius: 6px; cursor: pointer; transition: background 0.15s; margin-top: 1rem; }
+  .btn-primary:hover { background: var(--brown-mid); }
+  .btn-whatsapp { width: 100%; padding: 1rem; background: #25D366; color: white; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; border: none; border-radius: 6px; cursor: pointer; margin-top: 0.6rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; }
+  .btn-secondary { width: 100%; padding: 0.8rem; background: transparent; color: var(--text-muted); font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--divider); border-radius: 6px; cursor: pointer; margin-top: 0.6rem; }
+
+  .pad { padding: 1.5rem; }
+  .pad-sm { padding: 1rem 1.5rem; }
+  .spacer { height: 6rem; } /* space for cart bar */
+
+  /* NOTICE */
+  .notice { background: var(--bg-alt); border-left: 3px solid var(--gold); padding: 0.8rem 1rem; margin: 1rem 1.5rem; border-radius: 0 4px 4px 0; font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* SUCCESS */
+  .success-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--green-bg); border: 2px solid var(--green); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 2rem auto 1rem; }
+  .success-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-style: italic; color: var(--brown); text-align: center; }
+  .success-sub { font-size: 0.78rem; color: var(--text-muted); text-align: center; line-height: 1.7; margin-top: 0.5rem; }
+
+  /* FOOTER */
+  .footer { background: var(--brown); color: rgba(200,165,90,0.45); text-align: center; padding: 2rem 1.5rem; font-size: 0.7rem; letter-spacing: 0.06em; line-height: 1.9; }
+  .footer a { color: var(--gold-light); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <a class="hero-back" href="index.html">← Ementa</a>
+  <div class="hero-logo">Extremo</div>
+  <div class="hero-tagline">Padaria · Pastelaria · Pizzaria · Hamburgueria</div>
+  <div class="hero-rule"></div>
+  <div class="hero-title">Encomendas Takeaway</div>
+</div>
+
+<!-- STEPS -->
+<div class="steps">
+  <div class="step active" id="step1"><div class="step-num">1</div> Produtos</div>
+  <div class="step-arrow">›</div>
+  <div class="step" id="step2"><div class="step-num">2</div> Dados</div>
+  <div class="step-arrow">›</div>
+  <div class="step" id="step3"><div class="step-num">3</div> Pagamento</div>
+</div>
+
+<!-- PAGE 1: PRODUTOS -->
+<div id="page1" class="page active">
+  <div class="notice">
+    Encomendas para levantamento no balcão. Mínimo 30 minutos de antecedência. Pagamento antecipado por MBWay obrigatório. <strong>Ao domingo</strong> estamos abertos apenas para takeaway das 18:30 às 21:30.
+  </div>
+
+  <div class="cat">Pizzas</div>
+  <div class="prod" data-id="pizza-extremo" data-name="Pizza Extremo" data-base-price="10">
+    <div class="prod-info">
+      <div class="prod-name">Pizza Extremo</div>
+      <div class="prod-desc">Molho de tomate, chouriço, fiambre, cogumelos, azeitonas e queijo mozzarella</div>
+      <div class="size-row">
+        <span class="size-btn selected" data-size="Pequena" data-price="10">Pequena 10€</span>
+        <span class="size-btn" data-size="Média" data-price="14">Média 14€</span>
+        <span class="size-btn" data-size="Familiar" data-price="18">Familiar 18€</span>
+      </div>
+    </div>
+    <div class="qty-control">
+      <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+      <span class="qty-num">0</span>
+      <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+    </div>
+  </div>
+  <div class="prod" data-id="pizza-bacon" data-name="Pizza Bacon" data-base-price="10">
+    <div class="prod-info">
+      <div class="prod-name">Pizza Bacon</div>
+      <div class="prod-desc">Molho de tomate, bacon, fiambre, chouriço e queijo mozzarella</div>
+      <div class="size-row">
+        <span class="size-btn selected" data-size="Pequena" data-price="10">Pequena 10€</span>
+        <span class="size-btn" data-size="Média" data-price="14">Média 14€</span>
+        <span class="size-btn" data-size="Familiar" data-price="18">Familiar 18€</span>
+      </div>
+    </div>
+    <div class="qty-control">
+      <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+      <span class="qty-num">0</span>
+      <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+    </div>
+  </div>
+  <div class="prod" data-id="pizza-pepperoni" data-name="Pizza Pepperoni" data-base-price="10">
+    <div class="prod-info">
+      <div class="prod-name">Pizza Pepperoni</div>
+      <div class="prod-desc">Molho de tomate, fiambre, queijo mozzarella, pepperoni e orégãos</div>
+      <div class="size-row">
+        <span class="size-btn selected" data-size="Pequena" data-price="10">Pequena 10€</span>
+        <span class="size-btn" data-size="Média" data-price="14">Média 14€</span>
+        <span class="size-btn" data-size="Familiar" data-price="18">Familiar 18€</span>
+      </div>
+    </div>
+    <div class="qty-control">
+      <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+      <span class="qty-num">0</span>
+      <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+    </div>
+  </div>
+  <div class="prod" data-id="pizza-chicken" data-name="Pizza Chicken" data-base-price="10">
+    <div class="prod-info">
+      <div class="prod-name">Pizza Chicken</div>
+      <div class="prod-desc">Molho de tomate, frango, cogumelos, azeitonas, queijo mozzarella e orégãos</div>
+      <div class="size-row">
+        <span class="size-btn selected" data-size="Pequena" data-price="10">Pequena 10€</span>
+        <span class="size-btn" data-size="Média" data-price="14">Média 14€</span>
+        <span class="size-btn" data-size="Familiar" data-price="18">Familiar 18€</span>
+      </div>
+    </div>
+    <div class="qty-control">
+      <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+      <span class="qty-num">0</span>
+      <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+    </div>
+  </div>
+  <div class="prod" data-id="pizza-atum" data-name="Pizza Atum" data-base-price="10">
+    <div class="prod-info">
+      <div class="prod-name">Pizza Atum</div>
+      <div class="prod-desc">Molho de tomate, fiambre, atum, azeitonas, queijo mozzarella e orégãos</div>
+      <div class="size-row">
+        <span class="size-btn selected" data-size="Pequena" data-price="10">Pequena 10€</span>
+        <span class="size-btn" data-size="Média" data-price="14">Média 14€</span>
+        <span class="size-btn" data-size="Familiar" data-price="18">Familiar 18€</span>
+      </div>
+    </div>
+    <div class="qty-control">
+      <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+      <span class="qty-num">0</span>
+      <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+    </div>
+  </div>
+  <div class="prod" data-id="pizza-margarita" data-name="Pizza Margarita" data-base-price="10">
+    <div class="prod-info">
+      <div class="prod-name">Pizza Margarita</div>
+      <div class="prod-desc">Molho de tomate e queijo mozzarella</div>
+      <div class="size-row">
+        <span class="size-btn selected" data-size="Pequena" data-price="10">Pequena 10€</span>
+        <span class="size-btn" data-size="Média" data-price="14">Média 14€</span>
+        <span class="size-btn" data-size="Familiar" data-price="18">Familiar 18€</span>
+      </div>
+    </div>
+    <div class="qty-control">
+      <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+      <span class="qty-num">0</span>
+      <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+    </div>
+  </div>
+  <div class="prod" data-id="pizza-vegetariana" data-name="Pizza Vegetariana" data-base-price="10">
+    <div class="prod-info">
+      <div class="prod-name">Pizza Vegetariana</div>
+      <div class="prod-desc">Molho de tomate, pimentos, milho, azeitonas, queijo mozzarella e orégãos</div>
+      <div class="size-row">
+        <span class="size-btn selected" data-size="Pequena" data-price="10">Pequena 10€</span>
+        <span class="size-btn" data-size="Média" data-price="14">Média 14€</span>
+        <span class="size-btn" data-size="Familiar" data-price="18">Familiar 18€</span>
+      </div>
+    </div>
+    <div class="qty-control">
+      <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+      <span class="qty-num">0</span>
+      <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+    </div>
+  </div>
+  <div class="prod" data-id="pizza-bolonhesa" data-name="Pizza Bolonhesa" data-base-price="10">
+    <div class="prod-info">
+      <div class="prod-name">Pizza Bolonhesa</div>
+      <div class="prod-desc">Molho de tomate, carne picada e queijo mozzarella</div>
+      <div class="size-row">
+        <span class="size-btn selected" data-size="Pequena" data-price="10">Pequena 10€</span>
+        <span class="size-btn" data-size="Média" data-price="14">Média 14€</span>
+        <span class="size-btn" data-size="Familiar" data-price="18">Familiar 18€</span>
+      </div>
+    </div>
+    <div class="qty-control">
+      <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+      <span class="qty-num">0</span>
+      <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+    </div>
+  </div>
+
+  <div class="cat" style="margin-top:0.5rem">Bôla de Carne</div>
+  <div class="prod" data-id="bola-carne" data-name="Bôla de Carne" data-base-price="11">
+    <div class="prod-info">
+      <div class="prod-name">Bôla de Carne</div>
+      <div class="prod-desc">Chouriço, fiambre, bacon e queijo mozzarella</div>
+      <div class="size-row">
+        <span class="size-btn selected" data-size="Pequena" data-price="11">Pequena 11€</span>
+        <span class="size-btn" data-size="Média" data-price="16">Média 16€</span>
+        <span class="size-btn" data-size="Familiar" data-price="21">Familiar 21€</span>
+      </div>
+    </div>
+    <div class="qty-control">
+      <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+      <span class="qty-num">0</span>
+      <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+    </div>
+  </div>
+
+  <div class="cat" style="margin-top:0.5rem">Com o Nosso Molho</div>
+  <div class="prod" data-id="francesinha" data-name="Francesinha" data-base-price="12">
+    <div class="prod-info">
+      <div class="prod-name">Francesinha</div>
+      <div class="prod-desc">Pão de forma, bife, ovo, queijo, fiambre, chouriço, bacon, batata frita e molho</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0">
+      <div class="prod-price">12€</div>
+      <div class="qty-control">
+        <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-num">0</span>
+        <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+  </div>
+  <div class="prod" data-id="cachorro" data-name="Cachorro Especial" data-base-price="8">
+    <div class="prod-info">
+      <div class="prod-name">Cachorro Especial</div>
+      <div class="prod-desc">Pão de cachorro, queijo, fiambre, chouriço, salsicha, batata frita e molho</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0">
+      <div class="prod-price">8€</div>
+      <div class="qty-control">
+        <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-num">0</span>
+        <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+  </div>
+  <div class="prod" data-id="hamburguesinha" data-name="Hambúrguesinha" data-base-price="11">
+    <div class="prod-info">
+      <div class="prod-name">Hambúrguesinha</div>
+      <div class="prod-desc">Carne vaca ou frango · pão, queijo cheddar, queijo edam, ovo, bacon, batata frita e molho</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0">
+      <div class="prod-price">11€</div>
+      <div class="qty-control">
+        <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-num">0</span>
+        <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat" style="margin-top:0.5rem">Hambúrgueres & Pregos</div>
+  <div class="prod" data-id="hamburguer" data-name="Hambúrguer" data-base-price="9">
+    <div class="prod-info">
+      <div class="prod-name">Hambúrguer</div>
+      <div class="prod-desc">Carne vaca ou frango · queijo cheddar, edam, ovo, bacon, batata frita</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0">
+      <div class="prod-price">9€</div>
+      <div class="qty-control">
+        <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-num">0</span>
+        <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+  </div>
+  <div class="prod" data-id="prego-pao" data-name="Prego no Pão" data-base-price="7.50">
+    <div class="prod-info">
+      <div class="prod-name">Prego no Pão</div>
+      <div class="prod-desc">Bife, pão, queijo, fiambre e ovo</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0">
+      <div class="prod-price">7,50€</div>
+      <div class="qty-control">
+        <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-num">0</span>
+        <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+</div>
+
+<!-- PAGE 2: DADOS -->
+<div id="page2" class="page">
+  <div class="sec-head">
+    <div class="sec-title">O seu pedido</div>
+    <div class="sec-sub">Confirme e escolha a hora</div>
+    <div class="sec-rule"></div>
+  </div>
+
+  <div id="order-summary"></div>
+  <div class="summary-total">
+    <span class="summary-total-label">Total a pagar</span>
+    <span class="summary-total-val" id="summary-total-val">0,00€</span>
+  </div>
+
+  <div class="form-section" style="margin-top:0.5rem">
+    <div class="form-row">
+      <label class="form-label">O seu nome</label>
+      <input class="form-input" type="text" id="cliente-nome" placeholder="Nome completo" autocomplete="name">
+    </div>
+    <div class="form-row">
+      <label class="form-label">Telemóvel (para WhatsApp)</label>
+      <input class="form-input" type="tel" id="cliente-tel" placeholder="9XX XXX XXX" autocomplete="tel">
+    </div>
+  </div>
+
+  <div class="form-section">
+    <label class="form-label">Hora de levantamento</label>
+    <div class="time-grid" id="time-grid"></div>
+  </div>
+
+  <div class="notice">
+    Após confirmar, mostraremos os dados MBWay para pagamento. Só depois de receber o comprovativo é que a encomenda fica confirmada.
+  </div>
+
+  <div class="pad">
+    <button class="btn-primary" onclick="goToPayment()">Confirmar pedido →</button>
+    <button class="btn-secondary" onclick="goToPage(1)">← Voltar</button>
+  </div>
+  <div class="spacer" style="height:2rem"></div>
+</div>
+
+<!-- PAGE 3: PAGAMENTO -->
+<div id="page3" class="page">
+  <div class="sec-head">
+    <div class="sec-title">Pagamento</div>
+    <div class="sec-sub">MBWay + confirmação WhatsApp</div>
+    <div class="sec-rule"></div>
+  </div>
+
+  <div class="payment-box">
+    <div class="payment-header">
+      <div class="payment-header-title">Dados MBWay</div>
+    </div>
+    <div class="payment-body">
+      <div class="payment-row">
+        <span class="payment-key">Número MBWay</span>
+        <span class="payment-val">912 146 436</span>
+      </div>
+      <div class="payment-row">
+        <span class="payment-key">Nome</span>
+        <span class="payment-val">Extremo Padaria</span>
+      </div>
+      <div class="payment-row">
+        <span class="payment-key">Valor a transferir</span>
+        <span class="payment-val big" id="mbway-total">0,00€</span>
+      </div>
+      <div class="payment-row">
+        <span class="payment-key">Referência (descrição)</span>
+        <span class="payment-val" id="mbway-ref">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="notice" style="margin-top:0">
+    Após fazer o pagamento, clique no botão abaixo para enviar automaticamente o resumo da encomenda e o comprovativo por WhatsApp. A encomenda fica confirmada assim que recebermos.
+  </div>
+
+  <div class="pad" style="padding-top:0.5rem">
+    <a id="whatsapp-btn" class="btn-whatsapp" href="#" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Enviar confirmação por WhatsApp
+    </a>
+    <button class="btn-secondary" onclick="goToPage(2)">← Voltar</button>
+  </div>
+  <div style="height:2rem"></div>
+</div>
+
+<!-- CART BAR -->
+<div class="cart-bar" id="cart-bar">
+  <div class="cart-info">
+    <div class="cart-count" id="cart-count-label">0 itens</div>
+    <div class="cart-total" id="cart-total-label">0,00€</div>
+  </div>
+  <button class="cart-btn" onclick="goToPage(2)">Ver pedido →</button>
+</div>
+
+<div class="footer">
+  Rua da Carvalheira, 658 · Arnoso Santa Eulália · V.N. Famalicão<br>
+  <a href="tel:912146436">912 146 436</a> · Levantamento no balcão<br><br>
+  <a href="index.html">← Ver ementa completa</a>
+</div>
+
+<script>
+  // ── STATE ──────────────────────────────────────────────────────────────
+  const cart = {};
+  let selectedTime = '';
+  const MBWAY_NUMBER = '912 146 436';
+  const WA_NUMBER = '351912146436';
+
+  // ── SIZE SELECTORS ─────────────────────────────────────────────────────
+  document.querySelectorAll('.size-row').forEach(row => {
+    row.querySelectorAll('.size-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        row.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        const prod = btn.closest('.prod');
+        const id = prod.dataset.id;
+        if (cart[id] && cart[id].qty > 0) {
+          cart[id].size = btn.dataset.size;
+          cart[id].price = parseFloat(btn.dataset.price);
+          updateCart();
+        }
+      });
+    });
+  });
+
+  // ── QTY ────────────────────────────────────────────────────────────────
+  function changeQty(btn, delta) {
+    const control = btn.parentElement;
+    const numEl = control.querySelector('.qty-num');
+    const prod = btn.closest('.prod');
+    const id = prod.dataset.id;
+    const name = prod.dataset.name;
+    let qty = parseInt(numEl.textContent) + delta;
+    if (qty < 0) qty = 0;
+    numEl.textContent = qty;
+
+    const selectedSizeBtn = prod.querySelector('.size-btn.selected');
+    const size = selectedSizeBtn ? selectedSizeBtn.dataset.size : null;
+    const price = selectedSizeBtn ? parseFloat(selectedSizeBtn.dataset.price) : parseFloat(prod.dataset['base-price'] || prod.dataset.basePrice || 0);
+
+    if (qty === 0) {
+      delete cart[id];
+    } else {
+      cart[id] = { id, name, qty, size, price };
+    }
+    updateCart();
+  }
+
+  function updateCart() {
+    let totalItems = 0, totalPrice = 0;
+    Object.values(cart).forEach(item => {
+      totalItems += item.qty;
+      totalPrice += item.qty * item.price;
+    });
+
+    const bar = document.getElementById('cart-bar');
+    const label = document.getElementById('cart-count-label');
+    const total = document.getElementById('cart-total-label');
+
+    if (totalItems > 0) {
+      bar.classList.add('visible');
+      label.textContent = totalItems + (totalItems === 1 ? ' item' : ' itens');
+      total.textContent = totalPrice.toFixed(2).replace('.', ',') + '€';
+    } else {
+      bar.classList.remove('visible');
+    }
+  }
+
+  // ── TIME SLOTS ─────────────────────────────────────────────────────────
+  function generateTimeSlots() {
+    const grid = document.getElementById('time-grid');
+    grid.innerHTML = '';
+    const now = new Date();
+    const slots = [];
+    // Generate slots from 11:30 to 22:00 in 30min intervals
+    for (let h = 11; h <= 21; h++) {
+      for (let m of [0, 30]) {
+        if (h === 11 && m === 0) continue;
+        slots.push({ h, m });
+      }
+    }
+    slots.forEach(({ h, m }) => {
+      const slotDate = new Date();
+      slotDate.setHours(h, m, 0, 0);
+      const minTime = new Date(now.getTime() + 30 * 60000);
+      const label = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0');
+      const div = document.createElement('div');
+      div.className = 'time-slot' + (slotDate < minTime ? ' disabled' : '');
+      div.textContent = label;
+      if (!div.classList.contains('disabled')) {
+        div.addEventListener('click', () => {
+          document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+          div.classList.add('selected');
+          selectedTime = label;
+        });
+      }
+      grid.appendChild(div);
+    });
+  }
+
+  // ── PAGE NAV ────────────────────────────────────────────────────────────
+  function goToPage(n) {
+    if (n === 2) {
+      // validate cart
+      if (Object.keys(cart).length === 0) {
+        alert('Por favor adicione pelo menos um produto ao pedido.');
+        return;
+      }
+      generateTimeSlots();
+      buildSummary();
+    }
+    if (n === 3) {
+      if (!document.getElementById('cliente-nome').value.trim()) {
+        alert('Por favor indique o seu nome.');
+        return;
+      }
+      if (!document.getElementById('cliente-tel').value.trim()) {
+        alert('Por favor indique o seu telemóvel.');
+        return;
+      }
+      if (!selectedTime) {
+        alert('Por favor escolha a hora de levantamento.');
+        return;
+      }
+      buildPayment();
+    }
+
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page' + n).classList.add('active');
+
+    ['step1','step2','step3'].forEach((id, i) => {
+      const el = document.getElementById(id);
+      el.classList.remove('active','done');
+      if (i + 1 === n) el.classList.add('active');
+      else if (i + 1 < n) el.classList.add('done');
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goToPayment() { goToPage(3); }
+
+  // ── SUMMARY ─────────────────────────────────────────────────────────────
+  function buildSummary() {
+    const container = document.getElementById('order-summary');
+    container.innerHTML = '';
+    let total = 0;
+    Object.values(cart).forEach(item => {
+      const subtotal = item.qty * item.price;
+      total += subtotal;
+      const div = document.createElement('div');
+      div.className = 'summary-item';
+      div.innerHTML = `
+        <div>
+          <div class="summary-name">${item.name}${item.size ? ' · ' + item.size : ''}</div>
+          <div class="summary-detail">Qtd: ${item.qty} × ${item.price.toFixed(2).replace('.',',')}€</div>
+        </div>
+        <div class="summary-price">${subtotal.toFixed(2).replace('.',',')}€</div>`;
+      container.appendChild(div);
+    });
+    document.getElementById('summary-total-val').textContent = total.toFixed(2).replace('.',',') + '€';
+  }
+
+  // ── PAYMENT ─────────────────────────────────────────────────────────────
+  function buildPayment() {
+    const nome = document.getElementById('cliente-nome').value.trim();
+    const tel = document.getElementById('cliente-tel').value.trim();
+    let total = 0;
+    Object.values(cart).forEach(i => total += i.qty * i.price);
+
+    document.getElementById('mbway-total').textContent = total.toFixed(2).replace('.',',') + '€';
+    document.getElementById('mbway-ref').textContent = 'Encomenda ' + nome.split(' ')[0] + ' ' + selectedTime;
+
+    // Build WhatsApp message
+    let msg = '🍕 *NOVA ENCOMENDA — EXTREMO*\n\n';
+    msg += '👤 *Nome:* ' + nome + '\n';
+    msg += '📞 *Telemóvel:* ' + tel + '\n';
+    msg += '🕐 *Hora de levantamento:* ' + selectedTime + '\n\n';
+    msg += '*Produtos:*\n';
+    Object.values(cart).forEach(item => {
+      msg += '• ' + item.qty + '× ' + item.name;
+      if (item.size) msg += ' (' + item.size + ')';
+      msg += ' — ' + (item.qty * item.price).toFixed(2).replace('.',',') + '€\n';
+    });
+    msg += '\n💰 *Total:* ' + total.toFixed(2).replace('.',',') + '€';
+    msg += '\n💳 *Pagamento:* MBWay enviado';
+    msg += '\n\n_(Por favor anexe o comprovativo MBWay a esta mensagem)_';
+
+    const waLink = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+    document.getElementById('whatsapp-btn').href = waLink;
+  }
+</script>
+</body>
+</html>
