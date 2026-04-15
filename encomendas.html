@@ -164,6 +164,20 @@
   <div class="notice">
     Encomendas para levantamento no balcão. Mínimo 30 minutos de antecedência. Pagamento antecipado por MBWay obrigatório. <strong>Ao domingo</strong> estamos abertos apenas para takeaway das 18:30 às 21:30.
   </div>
+  <div style="margin:0 1.5rem 0.75rem;padding:0.9rem 1rem;background:#fff;border:1px solid var(--divider);border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:1rem">
+    <div>
+      <div style="font-size:0.85rem;font-weight:500;color:var(--brown)">Trazes o teu recipiente?</div>
+      <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px">Francesinhas, cachorros e hambúrgueres têm custo de embalagem de <strong>+0,60€</strong> se não trouxeres recipiente próprio</div>
+    </div>
+    <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;flex-shrink:0">
+      <span style="font-size:0.72rem;color:var(--text-muted)" id="container-lbl">Não</span>
+      <div style="position:relative;width:40px;height:22px" onclick="toggleContainer()">
+        <div id="container-track" style="width:40px;height:22px;background:#E0D5C0;border-radius:11px;transition:background 0.2s"></div>
+        <div id="container-thumb" style="position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2)"></div>
+      </div>
+      <span style="font-size:0.72rem;color:var(--text-muted)">Sim</span>
+    </label>
+  </div>
 
   <div class="cat">Pizzas</div>
   <div class="prod" data-id="pizza-extremo" data-name="Pizza Extremo" data-base-price="10">
@@ -629,6 +643,26 @@
     });
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Container fee
+  let bringContainer = false;
+  const CONTAINER_FEE = 0.60;
+  const CONTAINER_ITEMS = ['francesinha','cachorro','hamburguesinha','hamburguer'];
+
+  function toggleContainer() {
+    bringContainer = !bringContainer;
+    document.getElementById('container-track').style.background = bringContainer ? '#2A1608' : '#E0D5C0';
+    document.getElementById('container-thumb').style.transform = bringContainer ? 'translateX(18px)' : 'translateX(0)';
+    document.getElementById('container-lbl').textContent = bringContainer ? 'Sim' : 'Não';
+    // Recalculate prices
+    Object.keys(cart).forEach(id => {
+      if (CONTAINER_ITEMS.includes(id)) {
+        const base = cart[id].basePrice;
+        cart[id].price = bringContainer ? base : base + CONTAINER_FEE;
+      }
+    });
+    updateCart();
   }
 
   function goToPayment() { goToPage(3); }
